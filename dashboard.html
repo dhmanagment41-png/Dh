@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - DH Management</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4;
+            color: #111;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .dashboard-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #000;
+            padding-bottom: 15px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .section h2 {
+            margin-top: 0;
+            font-size: 18px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        input[type="text"],
+        textarea,
+        input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        textarea {
+            height: 80px;
+        }
+
+        button {
+            background: #000;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-right: 5px;
+        }
+
+        button:hover {
+            background: #333;
+        }
+
+        .delete-btn {
+            background: red;
+        }
+
+        .admin-actions {
+            text-align: center;
+            margin-top: 30px;
+            border-top: 2px solid #000;
+            padding-top: 20px;
+        }
+
+        .admin-actions a {
+            text-decoration: none;
+            color: #000;
+            font-weight: bold;
+            margin: 0 15px;
+        }
+
+        .item-row {
+            margin-bottom: 10px;
+            border: 1px solid #eee;
+            padding: 10px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .item-row input {
+            margin-bottom: 0;
+            flex: 1;
+        }
+
+        .icon-preview {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+        }
+
+        #logoPreview {
+            width: 150px;
+            height: 60px;
+            object-fit: contain;
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard-container">
+        <h1>⚙️ Admin Dashboard</h1>
+
+        <!-- زر الرجوع للموقع -->
+        <div class="admin-actions" style="margin-top: 0; padding-top: 0; border-top: none;">
+            <a href="index.html">↩ العودة للموقع</a>
+        </div>
+
+        <!-- قسم اللوجو -->
+        <div class="section">
+            <h2>لوجو الشركة (صورة)</h2>
+            <label>ارفع صورة اللوجو</label>
+            <input type="file" id="logoFileInput" accept="image/*" onchange="previewLogo(this)">
+            <img id="logoPreview" src="" alt="Logo Preview">
+            <button onclick="saveLogo()">حفظ اللوجو</button>
+        </div>
+
+        <!-- قسم النصوص -->
+        <div class="section">
+            <h2>تعديل النصوص</h2>
+            <label>العنوان الرئيسي (Hero)</label>
+            <input type="text" id="heroTitle" value="Your Trusted Partner in Digital Marketing Solutions">
+
+            <label>الوصف الرئيسي (Hero)</label>
+            <textarea id="heroDesc">A full-service agency specializing in digital marketing, content creation, and advertising solutions.</textarea>
+
+            <label>نص "من نحن"</label>
+            <textarea id="aboutText">DH Management company is a full-service advertising agency specialized in providing comprehensive digital marketing solutions. We have a highly skilled team.</textarea>
+
+            <label>نص "المهمة" (Mission)</label>
+            <textarea id="mission">To empower businesses by delivering innovative marketing solutions that drive sustainable growth and create lasting impressions.</textarea>
+
+            <label>نص "الرؤية" (Vision)</label>
+            <textarea id="vision">To be the leading digital agency recognized for excellence, creativity, and measurable impact on our clients' success.</textarea>
+        </div>
+
+        <!-- قسم الصور -->
+        <div class="section">
+            <h2>تعديل الصور</h2>
+            <label>رابط صورة "لماذا نحن" (Why Us)</label>
+            <input type="text" id="whyImg" placeholder="ضع رابط صورة هنا">
+        </div>
+
+        <!-- قسم الأيقونات -->
+        <div class="section">
+            <h2>الأيقونات</h2>
+            <p style="font-size: 13px; color: #555;">ضع رابط صورة الأيقونة أو اسم أيقونة.</p>
+
+            <label>أيقونة 1 (About Us)</label>
+            <input type="text" id="aboutIcon1" placeholder="رابط صورة أو اسم أيقونة">
+
+            <label>أيقونة 2 (About Us)</label>
+            <input type="text" id="aboutIcon2" placeholder="رابط صورة أو اسم أيقونة">
+
+            <label>أيقونة 3 (About Us)</label>
+            <input type="text" id="aboutIcon3" placeholder="رابط صورة أو اسم أيقونة">
+
+            <label>أيقونة 4 (About Us)</label>
+            <input type="text" id="aboutIcon4" placeholder="رابط صورة أو اسم أيقونة">
+
+            <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
+
+            <label>أيقونة الخدمة 1</label>
+            <input type="text" id="serviceIcon1" placeholder="رابط صورة أو اسم أيقونة">
+
+            <label>أيقونة الخدمة 2</label>
+            <input type="text" id="serviceIcon2" placeholder="رابط صورة أو اسم أيقونة">
+
+            <label>أيقونة الخدمة 3</label>
+            <input type="text" id="serviceIcon3" placeholder="رابط صورة أو اسم أيقونة">
+
+            <label>أيقونة الخدمة 4</label>
+            <input type="text" id="serviceIcon4" placeholder="رابط صورة أو اسم أيقونة">
+
+            <label>أيقونة الخدمة 5</label>
+            <input type="text" id="serviceIcon5" placeholder="رابط صورة أو اسم أيقونة">
+
+            <label>أيقونة الخدمة 6</label>
+            <input type="text" id="serviceIcon6" placeholder="رابط صورة أو اسم أيقونة">
+
+            <label>أيقونة الخدمة 7</label>
+            <input type="text" id="serviceIcon7" placeholder="رابط صورة أو اسم أيقونة">
+        </div>
+
+        <!-- قسم إضافة خدمة جديدة -->
+        <div class="section">
+            <h2>إضافة خدمة جديدة</h2>
+            <label>اسم الخدمة</label>
+            <input type="text" id="newServiceTitle" placeholder="مثال: SEO Optimization">
+            <label>أيقونة الخدمة (رابط أو اسم)</label>
+            <input type="text" id="newServiceIcon" placeholder="رابط صورة أو اسم أيقونة">
+            <button onclick="addService()">+ إضافة خدمة</button>
+        </div>
+
+        <!-- قسم الفريق -->
+        <div class="section">
+            <h2>الفريق</h2>
+            <div id="teamList"></div>
+            <button onclick="addTeamMember()">+ إضافة عضو جديد</button>
+        </div>
+
+        <!-- قسم العملاء -->
+        <div class="section">
+            <h2>العملاء (لوجوهات)</h2>
+            <div id="clientList"></div>
+            <button onclick="addClientLogo()">+ إضافة لوجو جديد</button>
+        </div>
+
+        <!-- أزرار الحفظ -->
+        <div class="admin-actions">
+            <button onclick="saveData()">💾 حفظ جميع التغييرات</button>
+            <button onclick="clearData()" style="background: red;">🗑️ مسح كل البيانات</button>
+        </div>
+    </div>
+
+    <script>
+        // دالة معاينة اللوجو
+        function previewLogo(input) {
+            const file = input.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('logoPreview').src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // دالة حفظ اللوجو
+        function saveLogo() {
+            const logoPreview = document.getElementById('logoPreview');
+            if (logoPreview.src) {
+                localStorage.setItem('siteLogoImage', logoPreview.src);
+                alert('✅ تم حفظ اللوجو!');
+            } else {
+                alert('⚠️ من فضلك ارفع صورة أولاً');
+            }
+        }
+
+        // دالة لتحميل البيانات الحالية في الداشبورد
+        function loadDashboardData() {
+            // اللوجو
+            const logoImage = localStorage.getItem('siteLogoImage');
+            if (logoImage) {
+                document.getElementById('logoPreview').src = logoImage;
+            }
+
+            // النصوص
+            document.getElementById('heroTitle').value = localStorage.getItem('heroTitle') || 'Your Trusted Partner in Digital Marketing Solutions';
+            document.getElementById('heroDesc').value = localStorage.getItem('heroDesc') || 'A full-service agency...';
+            document.getElementById('aboutText').value = localStorage.getItem('aboutText') || 'DH Management company...';
+            document.getElementById('mission').value = localStorage.getItem('mission') || 'To empower businesses...';
+            document.getElementById('vision').value = localStorage.getItem('vision') || 'To be the leading agency...';
+
+            // الصور
+            document.getElementById('whyImg').value = localStorage.getItem('whyImg') || '';
+
+            // الأيقونات
+            const aboutIcons = JSON.parse(localStorage.getItem('aboutIcons')) || [];
+            document.getElementById('aboutIcon1').value = aboutIcons[0] || '';
+            document.getElementById('aboutIcon2').value = aboutIcons[1] || '';
+            document.getElementById('aboutIcon3').value = aboutIcons[2] || '';
+            document.getElementById('aboutIcon4').value = aboutIcons[3] || '';
+
+            const serviceIcons = JSON.parse(localStorage.getItem('serviceIcons')) || [];
+            document.getElementById('serviceIcon1').value = serviceIcons[0] || '';
+            document.getElementById('serviceIcon2').value = serviceIcons[1] || '';
+            document.getElementById('serviceIcon3').value = serviceIcons[2] || '';
+            document.getElementById('serviceIcon4').value = serviceIcons[3] || '';
+            document.getElementById('serviceIcon5').value = serviceIcons[4] || '';
+            document.getElementById('serviceIcon6').value = serviceIcons[5] || '';
+            document.getElementById('serviceIcon7').value = serviceIcons[6] || '';
+
+            // الفريق
+            const teamMembers = JSON.parse(localStorage.getItem('teamMembers')) || [];
+            const teamList = document.getElementById('teamList');
+            teamList.innerHTML = '';
+            teamMembers.forEach(function (member, index) {
+                const row = document.createElement('div');
+                row.className = 'item-row';
+                row.innerHTML = `
+                    <input type="text" value="${member.name}" placeholder="الاسم" onchange="updateTeamMember(${index}, 'name', this.value)">
+                    <input type="text" value="${member.job}" placeholder="المسمى" onchange="updateTeamMember(${index}, 'job', this.value)">
+                    <button class="delete-btn" onclick="deleteTeamMember(${index})">حذف</button>
+                `;
+                teamList.appendChild(row);
+            });
+
+            // العملاء (لوجوهات)
+            const clientLogos = JSON.parse(localStorage.getItem('clientLogos')) || [];
+            const clientList = document.getElementById('clientList');
+            clientList.innerHTML = '';
+            clientLogos.forEach(function (logo, index) {
+                const row = document.createElement('div');
+                row.className = 'item-row';
+                row.innerHTML = `
+                    <img src="${logo}" class="icon-preview" alt="logo">
+                    <input type="text" value="${logo}" placeholder="رابط اللوجو" onchange="updateClientLogo(${index}, this.value)">
+                    <button class="delete-btn" onclick="deleteClientLogo(${index})">حذف</button>
+                `;
+                clientList.appendChild(row);
+            });
+        }
+
+        // تشغيل عند فتح الصفحة
+        window.onload = loadDashboardData;
+
+        // دالة الحفظ الشامل
+        function saveData() {
+            // حفظ النصوص
+            localStorage.setItem('heroTitle', document.getElementById('heroTitle').value);
+            localStorage.setItem('heroDesc', document.getElementById('heroDesc').value);
+            localStorage.setItem('aboutText', document.getElementById('aboutText').value);
+            localStorage.setItem('mission', document.getElementById('mission').value);
+            localStorage.setItem('vision', document.getElementById('vision').value);
+
+            // حفظ الصور
+            localStorage.setItem('whyImg', document.getElementById('whyImg').value);
+
+            // حفظ الأيقونات
+            const aboutIcons = [
+                document.getElementById('aboutIcon1').value,
+                document.getElementById('aboutIcon2').value,
+                document.getElementById('aboutIcon3').value,
+                document.getElementById('aboutIcon4').value
+            ];
+            localStorage.setItem('aboutIcons', JSON.stringify(aboutIcons));
+
+            const serviceIcons = [
+                document.getElementById('serviceIcon1').value,
+                document.getElementById('serviceIcon2').value,
+                document.getElementById('serviceIcon3').value,
+                document.getElementById('serviceIcon4').value,
+                document.getElementById('serviceIcon5').value,
+                document.getElementById('serviceIcon6').value,
+                document.getElementById('serviceIcon7').value
+            ];
+            localStorage.setItem('serviceIcons', JSON.stringify(serviceIcons));
+
+            // تنبيه
+            alert('✅ تم حفظ جميع التغييرات!');
+            window.location.href = 'index.html';
+        }
+
+        // دالة إضافة خدمة
+        function addService() {
+            const title = document.getElementById('newServiceTitle').value;
+            const icon = document.getElementById('newServiceIcon').value;
+            const dynamicServices = JSON.parse(localStorage.getItem('dynamicServices')) || [];
+            dynamicServices.push({ title: title, icon: icon });
+            localStorage.setItem('dynamicServices', JSON.stringify(dynamicServices));
+            alert('✅ تم إضافة الخدمة!');
+            document.getElementById('newServiceTitle').value = '';
+            document.getElementById('newServiceIcon').value = '';
+        }
+
+        // دالة إضافة عضو فريق
+        function addTeamMember() {
+            const teamMembers = JSON.parse(localStorage.getItem('teamMembers')) || [];
+            teamMembers.push({ name: 'اسم جديد', job: 'مسمى وظيفي' });
+            localStorage.setItem('teamMembers', JSON.stringify(teamMembers));
+            loadDashboardData();
+        }
+
+        // دالة تعديل عضو فريق
+        function updateTeamMember(index, field, value) {
+            const teamMembers = JSON.parse(localStorage.getItem('teamMembers')) || [];
+            teamMembers[index][field] = value;
+            localStorage.setItem('teamMembers', JSON.stringify(teamMembers));
+        }
+
+        // دالة حذف عضو فريق
+        function deleteTeamMember(index) {
+            const teamMembers = JSON.parse(localStorage.getItem('teamMembers')) || [];
+            teamMembers.splice(index, 1);
+            localStorage.setItem('teamMembers', JSON.stringify(teamMembers));
+            loadDashboardData();
+        }
+
+        // دالة إضافة لوجو عميل
+        function addClientLogo() {
+            const clientLogos = JSON.parse(localStorage.getItem('clientLogos')) || [];
+            clientLogos.push('');
+            localStorage.setItem('clientLogos', JSON.stringify(clientLogos));
+            loadDashboardData();
+        }
+
+        // دالة تعديل لوجو عميل
+        function updateClientLogo(index, value) {
+            const clientLogos = JSON.parse(localStorage.getItem('clientLogos')) || [];
+            clientLogos[index] = value;
+            localStorage.setItem('clientLogos', JSON.stringify(clientLogos));
+        }
+
+        // دالة حذف لوجو عميل
+        function deleteClientLogo(index) {
+            const clientLogos = JSON.parse(localStorage.getItem('clientLogos')) || [];
+            clientLogos.splice(index, 1);
+            localStorage.setItem('clientLogos', JSON.stringify(clientLogos));
+            loadDashboardData();
+        }
+
+        // دالة مسح كل شيء
+        function clearData() {
+            if (confirm('هل أنت متأكد من مسح جميع البيانات؟')) {
+                localStorage.clear();
+                alert('🗑️ تم مسح كل شيء!');
+                window.location.href = 'index.html';
+            }
+        }
+    </script>
+</body>
+</html>
