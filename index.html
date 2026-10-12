@@ -22,6 +22,8 @@
                 <a href="#why">Why Us</a>
                 <a href="#mission">Mission & Vision</a>
                 <a href="#services">Services</a>
+                <a href="#team">Our Team</a>
+                <a href="#clients">Our Clients</a>
                 <a href="#contact">Contact</a>
             </nav>
         </div>
@@ -44,9 +46,9 @@
     <!-- About Us -->
     <section id="about" class="full-screen">
         <div class="container">
-            <h2>About Us</h2>
+            <h2 id="aboutHeading">About Us</h2>
             <p class="muted-text" id="aboutText">DH Management company is a full-service advertising agency specialized in providing comprehensive digital marketing solutions. We have a highly skilled team.</p>
-            <div class="cards-grid">
+            <div class="cards-grid" id="aboutFeaturesGrid">
                 <div class="card">
                     <div class="icon" data-icon="about-icon-1"></div>
                     <h4>Build Strong & Memorable</h4>
@@ -69,18 +71,18 @@
 
     <!-- Why Us -->
     <section id="why" class="full-screen">
-        <div class="container why-us-grid">
-            <div class="why-img-placeholder">
+        <div class="container">
+            <div class="why-image-card">
                 <img id="whyImg" src="" alt="Why Us Image">
-            </div>
-            <div>
-                <h2>Why Us?!</h2>
-                <ul class="why-us-list">
-                    <li>1. Comprehensive digital strategies tailored to your brand.</li>
-                    <li>2. Data-driven campaigns that maximize ROI.</li>
-                    <li>3. Creative content that engages your audience.</li>
-                    <li>4. Dedicated support and transparent reporting.</li>
-                </ul>
+                <div class="why-image-content">
+                    <h2 id="whyHeading">Why Us?!</h2>
+                    <ul class="why-us-list" id="whyItems">
+                        <li>1. Comprehensive digital strategies tailored to your brand.</li>
+                        <li>2. Data-driven campaigns that maximize ROI.</li>
+                        <li>3. Creative content that engages your audience.</li>
+                        <li>4. Dedicated support and transparent reporting.</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </section>
@@ -88,14 +90,16 @@
     <!-- Mission & Vision -->
     <section id="mission" class="full-screen">
         <div class="container">
-            <h2>Mission & Vision</h2>
+            <h2 id="missionHeading">Mission & Vision</h2>
             <div class="mv-wrap">
-                <div>
-                    <h3>Our Mission</h3>
+                <div class="mv-card">
+                    <img class="mv-card-image" src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=1200&q=80" alt="" aria-hidden="true">
+                    <h3 id="missionCardHeading">Our Mission</h3>
                     <p class="muted-text" id="missionText">To empower businesses by delivering innovative marketing solutions that drive sustainable growth and create lasting impressions.</p>
                 </div>
-                <div>
-                    <h3>Our Vision</h3>
+                <div class="mv-card">
+                    <img class="mv-card-image" src="https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?auto=format&fit=crop&w=1200&q=80" alt="" aria-hidden="true">
+                    <h3 id="visionCardHeading">Our Vision</h3>
                     <p class="muted-text" id="visionText">To be the leading digital agency recognized for excellence, creativity, and measurable impact on our clients' success.</p>
                 </div>
             </div>
@@ -105,29 +109,29 @@
     <!-- Services -->
     <section id="services" class="full-screen">
         <div class="container">
-            <h2>Our Services</h2>
+            <h2 id="servicesHeading">Our Services</h2>
             <div class="cards-grid" id="servicesGrid">
-                <div class="card">
+                <div class="card service-card">
                     <div class="icon" data-icon="service-icon-1"></div>
                     <h4>Professional Graphic Design</h4>
                 </div>
-                <div class="card">
+                <div class="card service-card">
                     <div class="icon" data-icon="service-icon-2"></div>
                     <h4>Video Production & Advertising</h4>
                 </div>
-                <div class="card">
+                <div class="card service-card">
                     <div class="icon" data-icon="service-icon-3"></div>
                     <h4>Content Creation & Management</h4>
                 </div>
-                <div class="card">
+                <div class="card service-card">
                     <div class="icon" data-icon="service-icon-4"></div>
                     <h4>Social Media Management</h4>
                 </div>
-                <div class="card">
+                <div class="card service-card">
                     <div class="icon" data-icon="service-icon-5"></div>
                     <h4>Website Software Development</h4>
                 </div>
-                <div class="card">
+                <div class="card service-card">
                     <div class="icon" data-icon="service-icon-6"></div>
                     <h4>Paid Advertising Campaigns</h4>
                 </div>
@@ -138,7 +142,7 @@
     <!-- Team -->
     <section id="team" class="full-screen">
         <div class="container">
-            <h2>Our Team</h2>
+            <h2 id="teamHeading">Our Team</h2>
             <div class="team-grid" id="teamGrid">
                 <div class="team-member">
                     <h4>Name 1</h4>
@@ -155,9 +159,9 @@
     <!-- Clients -->
     <section id="clients" class="full-screen">
         <div class="container">
-            <h2>Our Clients</h2>
-            <p class="muted-text">And we are proud to work with.</p>
-            <div class="clients-grid">
+            <h2 id="clientsHeading">Our Clients</h2>
+            <p class="muted-text" id="clientsDesc">And we are proud to work with.</p>
+            <div class="clients-grid" id="clientsGrid">
                 <div class="client-logo-box">
                     <img id="clientLogo1" src="" alt="Client Logo 1">
                 </div>
@@ -174,10 +178,10 @@
     <!-- Contact -->
     <section id="contact" class="contact-section full-screen">
         <div class="container">
-            <h2>Let's Grow Together</h2>
-            <p>DH Management - Your Partner in Digital Success & Growth.</p>
-            <h3>Contact Us Now</h3>
-            <div class="contact-links">
+            <h2 id="contactHeading">Let's Grow Together</h2>
+            <p id="contactDesc">DH Management - Your Partner in Digital Success & Growth.</p>
+            <h3 id="contactSubheading">Contact Us Now</h3>
+            <div class="contact-links" id="contactLinks">
                 <a href="#">Phone</a>
                 <a href="#">Email</a>
                 <a href="#">WhatsApp</a>

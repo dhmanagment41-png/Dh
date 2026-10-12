@@ -100,24 +100,54 @@
         }
 
         .item-row {
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             border: 1px solid #eee;
-            padding: 10px;
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            padding: 14px;
+            border-radius: 6px;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            align-items: start;
+            gap: 12px;
         }
 
-        .item-row input {
-            margin-bottom: 0;
-            flex: 1;
+        .item-fields {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0 12px;
+        }
+
+        .editor-field {
+            min-width: 0;
+        }
+
+        .editor-field input,
+        .editor-field textarea {
+            margin-bottom: 10px;
+        }
+
+        .editor-field textarea {
+            height: 72px;
+        }
+
+        .item-row-title {
+            grid-column: 1 / -1;
+            margin-bottom: 6px;
+            color: #43504d;
+            font-size: 13px;
+        }
+
+        .section-hint {
+            margin: -5px 0 14px;
+            color: #68736f;
+            font-size: 13px;
         }
 
         .icon-preview {
-            width: 40px;
-            height: 40px;
+            width: 52px;
+            height: 52px;
             object-fit: contain;
+            border-radius: 4px;
+            background: #f5f6f5;
         }
 
         #logoPreview {
@@ -127,6 +157,38 @@
             border: 1px solid #ddd;
             margin-bottom: 10px;
             display: block;
+        }
+
+        #saveStatus {
+            margin-top: 12px;
+            color: #52615d;
+            font-size: 13px;
+        }
+
+        @media (max-width: 640px) {
+            body {
+                padding: 12px;
+            }
+
+            .dashboard-container {
+                padding: 18px;
+            }
+
+            .section {
+                padding: 14px;
+            }
+
+            .item-row {
+                grid-template-columns: 1fr;
+            }
+
+            .item-fields {
+                grid-template-columns: 1fr;
+            }
+
+            .item-row .delete-btn {
+                justify-self: start;
+            }
         }
     </style>
 </head>
@@ -166,6 +228,31 @@
 
             <label>نص "الرؤية" (Vision)</label>
             <textarea id="vision">To be the leading digital agency recognized for excellence, creativity, and measurable impact on our clients' success.</textarea>
+
+            <label>عنوان قسم About Us</label>
+            <input type="text" id="aboutHeadingInput" value="About Us">
+            <label>عنوان قسم Why Us</label>
+            <input type="text" id="whyHeadingInput" value="Why Us?!">
+            <label>عنوان قسم Mission &amp; Vision</label>
+            <input type="text" id="missionHeadingInput" value="Mission & Vision">
+            <label>عنوان بطاقة Mission</label>
+            <input type="text" id="missionCardHeadingInput" value="Our Mission">
+            <label>عنوان بطاقة Vision</label>
+            <input type="text" id="visionCardHeadingInput" value="Our Vision">
+            <label>عنوان قسم Services</label>
+            <input type="text" id="servicesHeadingInput" value="Our Services">
+            <label>عنوان قسم Team</label>
+            <input type="text" id="teamHeadingInput" value="Our Team">
+            <label>عنوان قسم Clients</label>
+            <input type="text" id="clientsHeadingInput" value="Our Clients">
+            <label>وصف قسم Clients</label>
+            <input type="text" id="clientsDescInput" value="And we are proud to work with.">
+            <label>عنوان قسم Contact</label>
+            <input type="text" id="contactHeadingInput" value="Let's Grow Together">
+            <label>وصف قسم Contact</label>
+            <input type="text" id="contactDescInput" value="DH Management - Your Partner in Digital Success & Growth.">
+            <label>عنوان التواصل</label>
+            <input type="text" id="contactSubheadingInput" value="Contact Us Now">
         </div>
 
         <!-- قسم الصور -->
@@ -175,266 +262,422 @@
             <input type="text" id="whyImg" placeholder="ضع رابط صورة هنا">
         </div>
 
-        <!-- قسم الأيقونات -->
+        <!-- إدارة محتوى الأقسام -->
         <div class="section">
-            <h2>الأيقونات</h2>
-            <p style="font-size: 13px; color: #555;">ضع رابط صورة الأيقونة أو اسم أيقونة.</p>
-
-            <label>أيقونة 1 (About Us)</label>
-            <input type="text" id="aboutIcon1" placeholder="رابط صورة أو اسم أيقونة">
-
-            <label>أيقونة 2 (About Us)</label>
-            <input type="text" id="aboutIcon2" placeholder="رابط صورة أو اسم أيقونة">
-
-            <label>أيقونة 3 (About Us)</label>
-            <input type="text" id="aboutIcon3" placeholder="رابط صورة أو اسم أيقونة">
-
-            <label>أيقونة 4 (About Us)</label>
-            <input type="text" id="aboutIcon4" placeholder="رابط صورة أو اسم أيقونة">
-
-            <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
-
-            <label>أيقونة الخدمة 1</label>
-            <input type="text" id="serviceIcon1" placeholder="رابط صورة أو اسم أيقونة">
-
-            <label>أيقونة الخدمة 2</label>
-            <input type="text" id="serviceIcon2" placeholder="رابط صورة أو اسم أيقونة">
-
-            <label>أيقونة الخدمة 3</label>
-            <input type="text" id="serviceIcon3" placeholder="رابط صورة أو اسم أيقونة">
-
-            <label>أيقونة الخدمة 4</label>
-            <input type="text" id="serviceIcon4" placeholder="رابط صورة أو اسم أيقونة">
-
-            <label>أيقونة الخدمة 5</label>
-            <input type="text" id="serviceIcon5" placeholder="رابط صورة أو اسم أيقونة">
-
-            <label>أيقونة الخدمة 6</label>
-            <input type="text" id="serviceIcon6" placeholder="رابط صورة أو اسم أيقونة">
-
-            <label>أيقونة الخدمة 7</label>
-            <input type="text" id="serviceIcon7" placeholder="رابط صورة أو اسم أيقونة">
+            <h2>مميزات About Us</h2>
+            <div id="aboutFeaturesList"></div>
+            <button type="button" onclick="addManagedItem('aboutFeatures')">+ إضافة ميزة</button>
         </div>
 
-        <!-- قسم إضافة خدمة جديدة -->
         <div class="section">
-            <h2>إضافة خدمة جديدة</h2>
-            <label>اسم الخدمة</label>
-            <input type="text" id="newServiceTitle" placeholder="مثال: SEO Optimization">
-            <label>أيقونة الخدمة (رابط أو اسم)</label>
-            <input type="text" id="newServiceIcon" placeholder="رابط صورة أو اسم أيقونة">
-            <button onclick="addService()">+ إضافة خدمة</button>
+            <h2>نقاط Why Us</h2>
+            <div id="whyItemsList"></div>
+            <button type="button" onclick="addManagedItem('whyItems')">+ إضافة نقطة</button>
         </div>
 
-        <!-- قسم الفريق -->
+        <div class="section">
+            <h2>الخدمات</h2>
+            <div id="servicesList"></div>
+            <button type="button" onclick="addManagedItem('siteServices')">+ إضافة خدمة</button>
+        </div>
+
         <div class="section">
             <h2>الفريق</h2>
+            <p class="section-hint">عدّل الاسم والمسمى الوظيفي، ويمكنك إضافة رابط صورة شخصية.</p>
             <div id="teamList"></div>
-            <button onclick="addTeamMember()">+ إضافة عضو جديد</button>
+            <button type="button" onclick="addManagedItem('teamMembers')">+ إضافة عضو</button>
         </div>
 
-        <!-- قسم العملاء -->
         <div class="section">
-            <h2>العملاء (لوجوهات)</h2>
+            <h2>العملاء</h2>
+            <p class="section-hint">أضف اسم العميل ورابط اللوجو. التغييرات تُحفظ تلقائيًا.</p>
             <div id="clientList"></div>
-            <button onclick="addClientLogo()">+ إضافة لوجو جديد</button>
+            <button type="button" onclick="addManagedItem('clients')">+ إضافة عميل</button>
+        </div>
+
+        <div class="section">
+            <h2>بيانات التواصل</h2>
+            <p class="section-hint">حدّث الرقم أو البريد هنا؛ روابط الموقع تُبنى تلقائيًا وتحفظ مباشرة.</p>
+            <label for="contactPhoneInput">رقم التليفون</label>
+            <input type="text" id="contactPhoneInput" inputmode="tel" placeholder="مثال: +201001234567">
+            <label for="contactEmailInput">البريد الإلكتروني</label>
+            <input type="text" id="contactEmailInput" inputmode="email" placeholder="name@example.com">
+            <label for="contactWhatsappInput">رقم واتساب مع مفتاح الدولة</label>
+            <input type="text" id="contactWhatsappInput" inputmode="tel" placeholder="مثال: +201001234567">
+            <h3>روابط التواصل الإضافية</h3>
+            <div id="contactLinksList"></div>
+            <button type="button" onclick="addManagedItem('contactLinks')">+ إضافة رابط</button>
         </div>
 
         <!-- أزرار الحفظ -->
         <div class="admin-actions">
             <button onclick="saveData()">💾 حفظ جميع التغييرات</button>
             <button onclick="clearData()" style="background: red;">🗑️ مسح كل البيانات</button>
+            <p id="saveStatus" role="status" aria-live="polite">تُحفظ تعديلات القوائم تلقائيًا.</p>
         </div>
     </div>
 
     <script>
-        // دالة معاينة اللوجو
+        const defaultAboutFeatures = [
+            { title: 'Build Strong & Memorable', icon: '' },
+            { title: 'Reach your target audience', icon: '' },
+            { title: 'Achieve real sales growth', icon: '' },
+            { title: 'Exceed expectations', icon: '' }
+        ];
+        const defaultServices = [
+            { title: 'Professional Graphic Design', media: '' },
+            { title: 'Video Production & Advertising', media: '' },
+            { title: 'Content Creation & Management', media: '' },
+            { title: 'Social Media Management', media: '' },
+            { title: 'Website Software Development', media: '' },
+            { title: 'Paid Advertising Campaigns', media: '' }
+        ];
+        const defaultWhyItems = [
+            { text: 'Comprehensive digital strategies tailored to your brand.' },
+            { text: 'Data-driven campaigns that maximize ROI.' },
+            { text: 'Creative content that engages your audience.' },
+            { text: 'Dedicated support and transparent reporting.' }
+        ];
+        const defaultTeamMembers = [
+            { name: 'Name 1', job: 'Job Title', photo: '' },
+            { name: 'Name 2', job: 'Job Title', photo: '' }
+        ];
+        const defaultContactLinks = [
+            { type: 'phone', label: 'Phone', url: '#' },
+            { type: 'email', label: 'Email', url: '#' },
+            { type: 'whatsapp', label: 'WhatsApp', url: '#' }
+        ];
+        const managerDefinitions = {
+            aboutFeatures: {
+                container: 'aboutFeaturesList',
+                storageKey: 'aboutFeatures',
+                fields: [
+                    { key: 'title', label: 'نص الميزة', placeholder: 'اكتب الميزة' },
+                    { key: 'icon', label: 'صورة خلفية أو أيقونة', placeholder: 'رابط صورة للخلفية أو رمز مثل ✦', preview: true }
+                ],
+                newItem: { title: '', icon: '' }
+            },
+            whyItems: {
+                container: 'whyItemsList',
+                storageKey: 'whyItems',
+                fields: [{ key: 'text', label: 'النقطة', placeholder: 'اكتب نقطة Why Us', multiline: true }],
+                newItem: { text: '' }
+            },
+            siteServices: {
+                container: 'servicesList',
+                storageKey: 'siteServices',
+                fields: [
+                    { key: 'title', label: 'اسم الخدمة', placeholder: 'اسم الخدمة' },
+                    { key: 'media', label: 'رابط صورة الخلفية أو أيقونة', placeholder: 'رابط صورة أو رمز مثل ✦', preview: true }
+                ],
+                newItem: { title: '', media: '' }
+            },
+            teamMembers: {
+                container: 'teamList',
+                storageKey: 'teamMembers',
+                fields: [
+                    { key: 'name', label: 'اسم الموظف', placeholder: 'الاسم' },
+                    { key: 'job', label: 'المسمى الوظيفي', placeholder: 'المسمى الوظيفي' },
+                    { key: 'photo', label: 'رابط الصورة الشخصية', placeholder: 'اختياري', preview: true }
+                ],
+                newItem: { name: '', job: '', photo: '' }
+            },
+            clients: {
+                container: 'clientList',
+                storageKey: 'clients',
+                fields: [
+                    { key: 'name', label: 'اسم العميل', placeholder: 'اسم العميل' },
+                    { key: 'logo', label: 'رابط اللوجو', placeholder: 'رابط صورة اللوجو', preview: true }
+                ],
+                newItem: { name: '', logo: '' }
+            },
+            contactLinks: {
+                container: 'contactLinksList',
+                storageKey: 'contactLinks',
+                fields: [
+                    { key: 'label', label: 'اسم وسيلة التواصل', placeholder: 'مثل: Email' },
+                    { key: 'url', label: 'الرابط أو الرقم', placeholder: 'mailto: / tel: / رابط' }
+                ],
+                newItem: { label: '', url: '' }
+            }
+        };
+        const dashboardLists = {};
+        const textFields = {
+            heroTitle: 'heroTitle',
+            heroDesc: 'heroDesc',
+            aboutText: 'aboutText',
+            mission: 'mission',
+            vision: 'vision',
+            aboutHeadingInput: 'aboutHeading',
+            whyHeadingInput: 'whyHeading',
+            missionHeadingInput: 'missionHeading',
+            missionCardHeadingInput: 'missionCardHeading',
+            visionCardHeadingInput: 'visionCardHeading',
+            servicesHeadingInput: 'servicesHeading',
+            teamHeadingInput: 'teamHeading',
+            clientsHeadingInput: 'clientsHeading',
+            clientsDescInput: 'clientsDesc',
+            contactHeadingInput: 'contactHeading',
+            contactDescInput: 'contactDesc',
+            contactSubheadingInput: 'contactSubheading'
+        };
+        let pendingLogoImage = '';
+
+        function isImageSource(value) {
+            return /^(https?:\/\/|data:|blob:)/i.test(value) || /\.(avif|gif|jpe?g|png|webp)([?#]|$)/i.test(value);
+        }
+
+        function readArray(storageKey, fallback) {
+            const stored = localStorage.getItem(storageKey);
+            if (stored === null) return fallback.map((item) => ({ ...item }));
+            try {
+                const parsed = JSON.parse(stored);
+                return Array.isArray(parsed) ? parsed : fallback.map((item) => ({ ...item }));
+            } catch {
+                return fallback.map((item) => ({ ...item }));
+            }
+        }
+
+        function setSaveStatus(message) {
+            document.getElementById('saveStatus').textContent = message;
+        }
+
+        function persistManager(key) {
+            const definition = managerDefinitions[key];
+            localStorage.setItem(definition.storageKey, JSON.stringify(dashboardLists[key]));
+            if (key === 'contactLinks') syncContactInputs();
+            setSaveStatus('تم حفظ تعديلات القوائم تلقائيًا.');
+        }
+
+        const contactFieldDefinitions = [
+            { type: 'phone', label: 'Phone', inputId: 'contactPhoneInput' },
+            { type: 'email', label: 'Email', inputId: 'contactEmailInput' },
+            { type: 'whatsapp', label: 'WhatsApp', inputId: 'contactWhatsappInput' }
+        ];
+
+        function contactUrl(type, value) {
+            const trimmed = value.trim();
+            if (!trimmed) return '#';
+            if (type === 'phone') {
+                return /^tel:/i.test(trimmed) ? trimmed : `tel:${trimmed.replace(/[^\d+*#]/g, '')}`;
+            }
+            if (type === 'email') {
+                return /^(mailto:|https?:\/\/)/i.test(trimmed) ? trimmed : `mailto:${trimmed}`;
+            }
+            if (/^(https?:\/\/|wa\.me\/)/i.test(trimmed)) {
+                return trimmed.startsWith('wa.me/') ? `https://${trimmed}` : trimmed;
+            }
+            const digits = trimmed.replace(/\D/g, '');
+            return digits ? `https://wa.me/${digits}` : trimmed;
+        }
+
+        function contactInputValue(type, url) {
+            if (!url || url === '#') return '';
+            if (type === 'phone' && /^tel:/i.test(url)) return url.slice(4);
+            if (type === 'email' && /^mailto:/i.test(url)) return url.slice(7);
+            if (type === 'whatsapp') {
+                const match = url.match(/wa\.me\/(\d+)/i);
+                if (match) return `+${match[1]}`;
+            }
+            return url;
+        }
+
+        function syncContactInputs() {
+            if (!dashboardLists.contactLinks) return;
+            contactFieldDefinitions.forEach((field) => {
+                const link = dashboardLists.contactLinks.find((item) => item.type === field.type)
+                    || dashboardLists.contactLinks.find((item) => item.label.toLowerCase() === field.label.toLowerCase());
+                document.getElementById(field.inputId).value = link ? contactInputValue(field.type, link.url) : '';
+            });
+        }
+
+        function updateContactField(type, value) {
+            const definition = contactFieldDefinitions.find((field) => field.type === type);
+            let link = dashboardLists.contactLinks.find((item) => item.type === type);
+            if (!link) {
+                link = dashboardLists.contactLinks.find((item) => item.label.toLowerCase() === definition.label.toLowerCase());
+            }
+            if (!link) {
+                link = { type, label: definition.label, url: '#' };
+                dashboardLists.contactLinks.push(link);
+            }
+            link.type = type;
+            link.url = contactUrl(type, value);
+            persistManager('contactLinks');
+            renderManager('contactLinks');
+        }
+
+        function renderManager(key) {
+            const definition = managerDefinitions[key];
+            const container = document.getElementById(definition.container);
+            container.replaceChildren();
+
+            dashboardLists[key].forEach((item, index) => {
+                const row = document.createElement('div');
+                row.className = 'item-row';
+
+                const fields = document.createElement('div');
+                fields.className = 'item-fields';
+
+                const title = document.createElement('strong');
+                title.className = 'item-row-title';
+                title.textContent = `${index + 1}. ${item.name || item.title || item.label || item.text || 'عنصر جديد'}`;
+                fields.appendChild(title);
+
+                definition.fields.forEach((field) => {
+                    const fieldWrap = document.createElement('div');
+                    fieldWrap.className = 'editor-field';
+                    const label = document.createElement('label');
+                    label.textContent = field.label;
+
+                    const input = document.createElement(field.multiline ? 'textarea' : 'input');
+                    if (!field.multiline) input.type = 'text';
+                    input.value = item[field.key] || '';
+                    input.placeholder = field.placeholder;
+                    input.setAttribute('aria-label', `${field.label} ${index + 1}`);
+
+                    let preview;
+                    if (field.preview) {
+                        preview = document.createElement('img');
+                        preview.className = 'icon-preview';
+                        preview.alt = '';
+                        preview.hidden = !isImageSource(input.value);
+                        if (!preview.hidden) preview.src = input.value;
+                        fieldWrap.appendChild(preview);
+                    }
+
+                    input.addEventListener('input', () => {
+                        dashboardLists[key][index][field.key] = input.value;
+                        if (key === 'contactLinks' && !dashboardLists[key][index].type) {
+                            const standard = contactFieldDefinitions.find((entry) => entry.label.toLowerCase() === dashboardLists[key][index].label.toLowerCase());
+                            if (standard) dashboardLists[key][index].type = standard.type;
+                        }
+                        title.textContent = `${index + 1}. ${item.name || item.title || item.label || item.text || 'عنصر جديد'}`;
+                        if (preview) {
+                            preview.hidden = !isImageSource(input.value);
+                            if (!preview.hidden) preview.src = input.value;
+                        }
+                        persistManager(key);
+                    });
+
+                    fieldWrap.append(label, input);
+                    fields.appendChild(fieldWrap);
+                });
+
+                const removeButton = document.createElement('button');
+                removeButton.type = 'button';
+                removeButton.className = 'delete-btn';
+                removeButton.textContent = 'حذف';
+                removeButton.addEventListener('click', () => deleteManagedItem(key, index));
+                row.append(fields, removeButton);
+                container.appendChild(row);
+            });
+        }
+
+        function addManagedItem(key) {
+            dashboardLists[key].push({ ...managerDefinitions[key].newItem });
+            persistManager(key);
+            renderManager(key);
+            const inputs = document.getElementById(managerDefinitions[key].container).querySelectorAll('input, textarea');
+            inputs[inputs.length - managerDefinitions[key].fields.length]?.focus();
+        }
+
+        function deleteManagedItem(key, index) {
+            dashboardLists[key].splice(index, 1);
+            persistManager(key);
+            renderManager(key);
+        }
+
         function previewLogo(input) {
             const file = input.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById('logoPreview').src = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            }
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                pendingLogoImage = event.target.result;
+                document.getElementById('logoPreview').src = pendingLogoImage;
+            };
+            reader.readAsDataURL(file);
         }
 
-        // دالة حفظ اللوجو
         function saveLogo() {
-            const logoPreview = document.getElementById('logoPreview');
-            if (logoPreview.src) {
-                localStorage.setItem('siteLogoImage', logoPreview.src);
-                alert('✅ تم حفظ اللوجو!');
-            } else {
-                alert('⚠️ من فضلك ارفع صورة أولاً');
+            if (!pendingLogoImage) {
+                alert('⚠️ من فضلك اختر صورة أولاً');
+                return;
             }
+            localStorage.setItem('siteLogoImage', pendingLogoImage);
+            setSaveStatus('تم حفظ اللوجو.');
         }
 
-        // دالة لتحميل البيانات الحالية في الداشبورد
         function loadDashboardData() {
-            // اللوجو
-            const logoImage = localStorage.getItem('siteLogoImage');
-            if (logoImage) {
-                document.getElementById('logoPreview').src = logoImage;
-            }
+            const logoImage = localStorage.getItem('siteLogoImage') || '';
+            pendingLogoImage = logoImage;
+            if (logoImage) document.getElementById('logoPreview').src = logoImage;
 
-            // النصوص
-            document.getElementById('heroTitle').value = localStorage.getItem('heroTitle') || 'Your Trusted Partner in Digital Marketing Solutions';
-            document.getElementById('heroDesc').value = localStorage.getItem('heroDesc') || 'A full-service agency...';
-            document.getElementById('aboutText').value = localStorage.getItem('aboutText') || 'DH Management company...';
-            document.getElementById('mission').value = localStorage.getItem('mission') || 'To empower businesses...';
-            document.getElementById('vision').value = localStorage.getItem('vision') || 'To be the leading agency...';
-
-            // الصور
+            Object.entries(textFields).forEach(([inputId, storageKey]) => {
+                const input = document.getElementById(inputId);
+                const saved = localStorage.getItem(storageKey);
+                if (saved !== null) input.value = saved;
+            });
             document.getElementById('whyImg').value = localStorage.getItem('whyImg') || '';
 
-            // الأيقونات
-            const aboutIcons = JSON.parse(localStorage.getItem('aboutIcons')) || [];
-            document.getElementById('aboutIcon1').value = aboutIcons[0] || '';
-            document.getElementById('aboutIcon2').value = aboutIcons[1] || '';
-            document.getElementById('aboutIcon3').value = aboutIcons[2] || '';
-            document.getElementById('aboutIcon4').value = aboutIcons[3] || '';
+            const legacyAboutIcons = readArray('aboutIcons', []);
+            const migratedFeatures = defaultAboutFeatures.map((feature, index) => ({
+                ...feature,
+                icon: legacyAboutIcons[index] || ''
+            }));
+            dashboardLists.aboutFeatures = readArray('aboutFeatures', migratedFeatures);
 
-            const serviceIcons = JSON.parse(localStorage.getItem('serviceIcons')) || [];
-            document.getElementById('serviceIcon1').value = serviceIcons[0] || '';
-            document.getElementById('serviceIcon2').value = serviceIcons[1] || '';
-            document.getElementById('serviceIcon3').value = serviceIcons[2] || '';
-            document.getElementById('serviceIcon4').value = serviceIcons[3] || '';
-            document.getElementById('serviceIcon5').value = serviceIcons[4] || '';
-            document.getElementById('serviceIcon6').value = serviceIcons[5] || '';
-            document.getElementById('serviceIcon7').value = serviceIcons[6] || '';
+            const legacyServiceIcons = readArray('serviceIcons', []);
+            const legacyDynamicServices = readArray('dynamicServices', []);
+            const migratedServices = defaultServices.map((service, index) => ({
+                ...service,
+                media: legacyServiceIcons[index] || ''
+            })).concat(legacyDynamicServices.map((service) => ({
+                title: service.title || '',
+                media: service.icon || service.media || ''
+            })));
+            dashboardLists.siteServices = readArray('siteServices', migratedServices);
 
-            // الفريق
-            const teamMembers = JSON.parse(localStorage.getItem('teamMembers')) || [];
-            const teamList = document.getElementById('teamList');
-            teamList.innerHTML = '';
-            teamMembers.forEach(function (member, index) {
-                const row = document.createElement('div');
-                row.className = 'item-row';
-                row.innerHTML = `
-                    <input type="text" value="${member.name}" placeholder="الاسم" onchange="updateTeamMember(${index}, 'name', this.value)">
-                    <input type="text" value="${member.job}" placeholder="المسمى" onchange="updateTeamMember(${index}, 'job', this.value)">
-                    <button class="delete-btn" onclick="deleteTeamMember(${index})">حذف</button>
-                `;
-                teamList.appendChild(row);
+            dashboardLists.whyItems = readArray('whyItems', defaultWhyItems);
+            dashboardLists.teamMembers = readArray('teamMembers', defaultTeamMembers);
+
+            const legacyClientLogos = readArray('clientLogos', []);
+            const migratedClients = legacyClientLogos.map((logo, index) => ({
+                name: `Client ${index + 1}`,
+                logo: typeof logo === 'string' ? logo : logo.logo || ''
+            }));
+            dashboardLists.clients = readArray('clients', migratedClients);
+            dashboardLists.contactLinks = readArray('contactLinks', defaultContactLinks);
+            dashboardLists.contactLinks.forEach((link) => {
+                if (!link.type) {
+                    const standard = contactFieldDefinitions.find((field) => field.label.toLowerCase() === (link.label || '').toLowerCase());
+                    if (standard) link.type = standard.type;
+                }
             });
+            syncContactInputs();
 
-            // العملاء (لوجوهات)
-            const clientLogos = JSON.parse(localStorage.getItem('clientLogos')) || [];
-            const clientList = document.getElementById('clientList');
-            clientList.innerHTML = '';
-            clientLogos.forEach(function (logo, index) {
-                const row = document.createElement('div');
-                row.className = 'item-row';
-                row.innerHTML = `
-                    <img src="${logo}" class="icon-preview" alt="logo">
-                    <input type="text" value="${logo}" placeholder="رابط اللوجو" onchange="updateClientLogo(${index}, this.value)">
-                    <button class="delete-btn" onclick="deleteClientLogo(${index})">حذف</button>
-                `;
-                clientList.appendChild(row);
+            Object.keys(managerDefinitions).forEach(renderManager);
+
+            contactFieldDefinitions.forEach((field) => {
+                document.getElementById(field.inputId).addEventListener('input', (event) => {
+                    updateContactField(field.type, event.target.value);
+                });
             });
         }
 
-        // تشغيل عند فتح الصفحة
         window.onload = loadDashboardData;
 
-        // دالة الحفظ الشامل
         function saveData() {
-            // حفظ النصوص
-            localStorage.setItem('heroTitle', document.getElementById('heroTitle').value);
-            localStorage.setItem('heroDesc', document.getElementById('heroDesc').value);
-            localStorage.setItem('aboutText', document.getElementById('aboutText').value);
-            localStorage.setItem('mission', document.getElementById('mission').value);
-            localStorage.setItem('vision', document.getElementById('vision').value);
-
-            // حفظ الصور
+            Object.entries(textFields).forEach(([inputId, storageKey]) => {
+                localStorage.setItem(storageKey, document.getElementById(inputId).value);
+            });
             localStorage.setItem('whyImg', document.getElementById('whyImg').value);
-
-            // حفظ الأيقونات
-            const aboutIcons = [
-                document.getElementById('aboutIcon1').value,
-                document.getElementById('aboutIcon2').value,
-                document.getElementById('aboutIcon3').value,
-                document.getElementById('aboutIcon4').value
-            ];
-            localStorage.setItem('aboutIcons', JSON.stringify(aboutIcons));
-
-            const serviceIcons = [
-                document.getElementById('serviceIcon1').value,
-                document.getElementById('serviceIcon2').value,
-                document.getElementById('serviceIcon3').value,
-                document.getElementById('serviceIcon4').value,
-                document.getElementById('serviceIcon5').value,
-                document.getElementById('serviceIcon6').value,
-                document.getElementById('serviceIcon7').value
-            ];
-            localStorage.setItem('serviceIcons', JSON.stringify(serviceIcons));
-
-            // تنبيه
+            Object.keys(managerDefinitions).forEach(persistManager);
+            setSaveStatus('تم حفظ جميع التغييرات.');
             alert('✅ تم حفظ جميع التغييرات!');
             window.location.href = 'index.html';
         }
 
-        // دالة إضافة خدمة
-        function addService() {
-            const title = document.getElementById('newServiceTitle').value;
-            const icon = document.getElementById('newServiceIcon').value;
-            const dynamicServices = JSON.parse(localStorage.getItem('dynamicServices')) || [];
-            dynamicServices.push({ title: title, icon: icon });
-            localStorage.setItem('dynamicServices', JSON.stringify(dynamicServices));
-            alert('✅ تم إضافة الخدمة!');
-            document.getElementById('newServiceTitle').value = '';
-            document.getElementById('newServiceIcon').value = '';
-        }
-
-        // دالة إضافة عضو فريق
-        function addTeamMember() {
-            const teamMembers = JSON.parse(localStorage.getItem('teamMembers')) || [];
-            teamMembers.push({ name: 'اسم جديد', job: 'مسمى وظيفي' });
-            localStorage.setItem('teamMembers', JSON.stringify(teamMembers));
-            loadDashboardData();
-        }
-
-        // دالة تعديل عضو فريق
-        function updateTeamMember(index, field, value) {
-            const teamMembers = JSON.parse(localStorage.getItem('teamMembers')) || [];
-            teamMembers[index][field] = value;
-            localStorage.setItem('teamMembers', JSON.stringify(teamMembers));
-        }
-
-        // دالة حذف عضو فريق
-        function deleteTeamMember(index) {
-            const teamMembers = JSON.parse(localStorage.getItem('teamMembers')) || [];
-            teamMembers.splice(index, 1);
-            localStorage.setItem('teamMembers', JSON.stringify(teamMembers));
-            loadDashboardData();
-        }
-
-        // دالة إضافة لوجو عميل
-        function addClientLogo() {
-            const clientLogos = JSON.parse(localStorage.getItem('clientLogos')) || [];
-            clientLogos.push('');
-            localStorage.setItem('clientLogos', JSON.stringify(clientLogos));
-            loadDashboardData();
-        }
-
-        // دالة تعديل لوجو عميل
-        function updateClientLogo(index, value) {
-            const clientLogos = JSON.parse(localStorage.getItem('clientLogos')) || [];
-            clientLogos[index] = value;
-            localStorage.setItem('clientLogos', JSON.stringify(clientLogos));
-        }
-
-        // دالة حذف لوجو عميل
-        function deleteClientLogo(index) {
-            const clientLogos = JSON.parse(localStorage.getItem('clientLogos')) || [];
-            clientLogos.splice(index, 1);
-            localStorage.setItem('clientLogos', JSON.stringify(clientLogos));
-            loadDashboardData();
-        }
-
-        // دالة مسح كل شيء
         function clearData() {
             if (confirm('هل أنت متأكد من مسح جميع البيانات؟')) {
                 localStorage.clear();
