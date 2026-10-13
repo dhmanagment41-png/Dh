@@ -22,6 +22,14 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
 
+        .login-container {
+            max-width: 420px;
+            margin: 10vh auto;
+            padding: 28px;
+            background: #fff;
+            border: 1px solid #ddd;
+        }
+
         h1 {
             text-align: center;
             margin-bottom: 30px;
@@ -52,6 +60,8 @@
         }
 
         input[type="text"],
+        input[type="email"],
+        input[type="password"],
         textarea,
         input[type="file"] {
             width: 100%;
@@ -194,7 +204,17 @@
 </head>
 <body>
 
-    <div class="dashboard-container">
+    <form id="dashboardLogin" class="login-container" hidden>
+        <h1>دخول الإدارة</h1>
+        <label for="adminEmail">البريد الإلكتروني</label>
+        <input id="adminEmail" type="email" autocomplete="username" required>
+        <label for="adminPassword">كلمة المرور</label>
+        <input id="adminPassword" type="password" autocomplete="current-password" required>
+        <button type="submit">دخول</button>
+        <p id="loginStatus" role="status" aria-live="polite"></p>
+    </form>
+
+    <div class="dashboard-container" id="dashboardContent" hidden>
         <h1>⚙️ Admin Dashboard</h1>
 
         <!-- زر الرجوع للموقع -->
@@ -229,6 +249,14 @@
             <label>نص "الرؤية" (Vision)</label>
             <textarea id="vision">To be the leading digital agency recognized for excellence, creativity, and measurable impact on our clients' success.</textarea>
 
+            <label for="missionImageFile">صورة قسم Mission</label>
+            <input type="file" id="missionImageFile" accept="image/*">
+            <img id="missionImagePreview" alt="معاينة صورة Mission" hidden style="max-width: 240px; max-height: 160px; object-fit: contain;">
+
+            <label for="visionImageFile">صورة قسم Vision</label>
+            <input type="file" id="visionImageFile" accept="image/*">
+            <img id="visionImagePreview" alt="معاينة صورة Vision" hidden style="max-width: 240px; max-height: 160px; object-fit: contain;">
+
             <label>عنوان قسم About Us</label>
             <input type="text" id="aboutHeadingInput" value="About Us">
             <label>عنوان قسم Why Us</label>
@@ -260,6 +288,9 @@
             <h2>تعديل الصور</h2>
             <label>رابط صورة "لماذا نحن" (Why Us)</label>
             <input type="text" id="whyImg" placeholder="ضع رابط صورة هنا">
+            <label for="whyImageFile">أو ارفع صورة من جهازك</label>
+            <input type="file" id="whyImageFile" accept="image/*">
+            <img id="whyImagePreview" alt="معاينة صورة Why Us" hidden style="max-width: 240px; max-height: 160px; object-fit: contain;">
         </div>
 
         <!-- إدارة محتوى الأقسام -->
@@ -313,10 +344,14 @@
         <div class="admin-actions">
             <button onclick="saveData()">💾 حفظ جميع التغييرات</button>
             <button onclick="clearData()" style="background: red;">🗑️ مسح كل البيانات</button>
+            <button type="button" onclick="signOutDashboard()">تسجيل الخروج</button>
             <p id="saveStatus" role="status" aria-live="polite">تُحفظ تعديلات القوائم تلقائيًا.</p>
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script src="site-sync.js"></script>
     <script>
         const defaultAboutFeatures = [
             { title: 'Build Strong & Memorable', icon: '' },
@@ -422,6 +457,7 @@
             contactSubheadingInput: 'contactSubheading'
         };
         let pendingLogoImage = '';
+        let pendingLogoFile = null;
 
         function isImageSource(value) {
             return /^(https?:\/\/|data:|blob:)/i.test(value) || /\.(avif|gif|jpe?g|png|webp)([?#]|$)/i.test(value);
@@ -445,8 +481,8 @@
         function persistManager(key) {
             const definition = managerDefinitions[key];
             localStorage.setItem(definition.storageKey, JSON.stringify(dashboardLists[key]));
+            siteSync.queueSave();
             if (key === 'contactLinks') syncContactInputs();
-            setSaveStatus('تم حفظ تعديلات القوائم تلقائيًا.');
         }
 
         const contactFieldDefinitions = [
@@ -544,6 +580,24 @@
                         preview.hidden = !isImageSource(input.value);
                         if (!preview.hidden) preview.src = input.value;
                         fieldWrap.appendChild(preview);
+
+                        const fileInput = document.createElement('input');
+                        fileInput.type = 'file';
+                        fileInput.accept = 'image/*';
+                        fileInput.setAttribute('aria-label', `رفع صورة: ${field.label} ${index + 1}`);
+                        fileInput.addEventListener('change', async () => {
+                            const file = fileInput.files[0];
+                            if (!file) return;
+                            try {
+                                setSaveStatus('جارٍ رفع الصورة...');
+                                input.value = await siteSync.uploadImage(file);
+                                input.dispatchEvent(new Event('input'));
+                                setSaveStatus('تم رفع الصورة وحفظها.');
+                            } catch (error) {
+                                setSaveStatus(`تعذر رفع الصورة: ${error.message}`);
+                            }
+                        });
+                        fieldWrap.appendChild(fileInput);
                     }
 
                     input.addEventListener('input', () => {
@@ -591,21 +645,25 @@
         function previewLogo(input) {
             const file = input.files[0];
             if (!file) return;
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                pendingLogoImage = event.target.result;
-                document.getElementById('logoPreview').src = pendingLogoImage;
-            };
-            reader.readAsDataURL(file);
+            pendingLogoFile = file;
+            pendingLogoImage = URL.createObjectURL(file);
+            document.getElementById('logoPreview').src = pendingLogoImage;
         }
 
-        function saveLogo() {
-            if (!pendingLogoImage) {
+        async function saveLogo() {
+            if (!pendingLogoFile && !pendingLogoImage) {
                 alert('⚠️ من فضلك اختر صورة أولاً');
                 return;
             }
-            localStorage.setItem('siteLogoImage', pendingLogoImage);
-            setSaveStatus('تم حفظ اللوجو.');
+            try {
+                if (pendingLogoFile) pendingLogoImage = await siteSync.uploadImage(pendingLogoFile);
+                localStorage.setItem('siteLogoImage', pendingLogoImage);
+                pendingLogoFile = null;
+                await siteSync.saveNow();
+                setSaveStatus('تم حفظ اللوجو ومزامنته.');
+            } catch (error) {
+                setSaveStatus(`تعذرت مزامنة اللوجو: ${error.message}`);
+            }
         }
 
         function loadDashboardData() {
@@ -619,6 +677,19 @@
                 if (saved !== null) input.value = saved;
             });
             document.getElementById('whyImg').value = localStorage.getItem('whyImg') || '';
+            const whyImagePreview = document.getElementById('whyImagePreview');
+            if (isImageSource(document.getElementById('whyImg').value)) {
+                whyImagePreview.src = document.getElementById('whyImg').value;
+                whyImagePreview.hidden = false;
+            }
+            ['missionImage', 'visionImage'].forEach((key) => {
+                const image = localStorage.getItem(key);
+                const preview = document.getElementById(`${key}Preview`);
+                if (image) {
+                    preview.src = image;
+                    preview.hidden = false;
+                }
+            });
 
             const legacyAboutIcons = readArray('aboutIcons', []);
             const migratedFeatures = defaultAboutFeatures.map((feature, index) => ({
@@ -665,24 +736,91 @@
             });
         }
 
-        window.onload = loadDashboardData;
+        async function initializeDashboard() {
+            const loginForm = document.getElementById('dashboardLogin');
+            const dashboard = document.getElementById('dashboardContent');
+            const session = await siteSync.getSession();
+            if (!session) {
+                loginForm.hidden = false;
+                return;
+            }
 
-        function saveData() {
+            const hasSharedContent = await siteSync.load();
+            dashboard.hidden = false;
+            loadDashboardData();
+            if (!hasSharedContent) await siteSync.saveNow();
+
+            const setupImageUpload = (inputId, storageKey, previewId) => {
+                document.getElementById(inputId).addEventListener('change', async (event) => {
+                    const file = event.target.files[0];
+                    if (!file) return;
+                    try {
+                        setSaveStatus('جارٍ رفع الصورة...');
+                        const url = await siteSync.uploadImage(file);
+                        localStorage.setItem(storageKey, url);
+                        const preview = document.getElementById(previewId);
+                        preview.src = url;
+                        preview.hidden = false;
+                        siteSync.queueSave();
+                        setSaveStatus('تم رفع الصورة ومزامنتها.');
+                    } catch (error) {
+                        setSaveStatus(`تعذر رفع الصورة: ${error.message}`);
+                    }
+                });
+            };
+
+            setupImageUpload('whyImageFile', 'whyImg', 'whyImagePreview');
+            setupImageUpload('missionImageFile', 'missionImage', 'missionImagePreview');
+            setupImageUpload('visionImageFile', 'visionImage', 'visionImagePreview');
+        }
+
+        document.getElementById('dashboardLogin').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const status = document.getElementById('loginStatus');
+            status.textContent = 'جارٍ تسجيل الدخول...';
+            try {
+                await siteSync.signIn(document.getElementById('adminEmail').value, document.getElementById('adminPassword').value);
+                window.location.reload();
+            } catch (error) {
+                status.textContent = `تعذر تسجيل الدخول: ${error.message}`;
+            }
+        });
+
+        async function signOutDashboard() {
+            await siteSync.signOut();
+            window.location.reload();
+        }
+
+        initializeDashboard().catch((error) => {
+            document.getElementById('dashboardLogin').hidden = false;
+            document.getElementById('loginStatus').textContent = `تعذر الاتصال بـ Supabase: ${error.message}`;
+        });
+
+        async function saveData() {
             Object.entries(textFields).forEach(([inputId, storageKey]) => {
                 localStorage.setItem(storageKey, document.getElementById(inputId).value);
             });
             localStorage.setItem('whyImg', document.getElementById('whyImg').value);
             Object.keys(managerDefinitions).forEach(persistManager);
-            setSaveStatus('تم حفظ جميع التغييرات.');
-            alert('✅ تم حفظ جميع التغييرات!');
-            window.location.href = 'index.html';
+            try {
+                await siteSync.saveNow();
+                setSaveStatus('تم حفظ جميع التغييرات ومزامنتها.');
+                alert('تم حفظ جميع التغييرات ومزامنتها.');
+                window.location.href = 'index.html';
+            } catch (error) {
+                setSaveStatus(`تعذرت المزامنة: ${error.message}`);
+            }
         }
 
-        function clearData() {
+        async function clearData() {
             if (confirm('هل أنت متأكد من مسح جميع البيانات؟')) {
-                localStorage.clear();
-                alert('🗑️ تم مسح كل شيء!');
-                window.location.href = 'index.html';
+                try {
+                    await siteSync.clearContent();
+                    alert('تم مسح بيانات الموقع المشتركة.');
+                    window.location.href = 'index.html';
+                } catch (error) {
+                    setSaveStatus(`تعذر المسح: ${error.message}`);
+                }
             }
         }
     </script>

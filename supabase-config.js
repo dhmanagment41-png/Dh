@@ -1,0 +1,2 @@
+window.DH_SUPABASE_URL = 'https://ciawnjrnyhgjlpieuagu.supabase.co';
+window.DH_SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNpYXduanJueWhnamxwaWV1YWd1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE4MzgwOTMsImV4cCI6MjEwNzQxNDA5M30.M7021Mo-Z2Ft-q2U2DnuqVuIzq9gXFpPuzKKjsSXgxw';

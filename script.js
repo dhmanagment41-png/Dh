@@ -3,8 +3,12 @@
 ========================================== */
 
 document.addEventListener('DOMContentLoaded', function () {
-    loadSiteData();
-    setupNavigation();
+    Promise.resolve(window.siteSync.load())
+        .catch((error) => console.error('Could not load shared site content:', error))
+        .finally(() => {
+            loadSiteData();
+            setupNavigation();
+        });
 });
 
 function isImageSource(value) {
@@ -158,6 +162,10 @@ function loadSiteData() {
     if (aboutText) document.getElementById('aboutText').innerText = aboutText;
     if (mission) document.getElementById('missionText').innerText = mission;
     if (vision) document.getElementById('visionText').innerText = vision;
+    const missionImage = localStorage.getItem('missionImage');
+    const visionImage = localStorage.getItem('visionImage');
+    if (missionImage) document.getElementById('missionBackgroundImage').src = missionImage;
+    if (visionImage) document.getElementById('visionBackgroundImage').src = visionImage;
 
     const publicHeadings = [
         'aboutHeading', 'whyHeading', 'missionHeading', 'missionCardHeading',
